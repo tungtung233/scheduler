@@ -34,6 +34,7 @@ export function getInterviewersForDay(state, day) {
 }
 
 
+//interview parameter only returns the interviewer ID - we need to crossreference the interviewer ID with the state data to find the interviewers details (name, avatar)
 export function getInterview(state, interview) {
 
   if (interview !== null) {
@@ -45,6 +46,7 @@ export function getInterview(state, interview) {
     interviewData.student = interview.student;
     interviewData.interviewer = state.interviewers[interviewerId]
     
+    //returns an object containing the student's name and a nested object containing the interviewer's details
     return interviewData;
   }
 
