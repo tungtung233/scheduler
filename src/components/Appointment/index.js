@@ -7,6 +7,7 @@ import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
+import Confirm from "components/Appointment/Confirm";
 
 import useVisualMode from "hooks/useVisualMode";
 
@@ -15,6 +16,7 @@ const SHOW = 'SHOW';
 const CREATE = 'CREATE';
 const SAVE = "SAVE";
 const DELETE = "DELETE";
+const CONFIRM = "CONFIRM";
 
 export default function Appointment(props) {
 
@@ -42,11 +44,15 @@ export default function Appointment(props) {
 
 
   function deleteAppointment() {
-    console.log('inside delete appointment')
+    transition(CONFIRM)
+    // cancelInterview(props.id)
+    //   .then(() => transition(EMPTY))
+  }
+
+  function confirmDeleteAppointment() {
     transition(DELETE)
     cancelInterview(props.id)
       .then(() => transition(EMPTY))
-
   }
 
 
@@ -69,6 +75,14 @@ export default function Appointment(props) {
         />
       )}
       {mode === SAVE && <Status message={"Saving"} />}
+
+      {mode === CONFIRM && (
+        <Confirm 
+          message={"Delete the appointment?"} 
+          onCancel={() => transition(SHOW)}
+          onConfirm={confirmDeleteAppointment}
+        />
+      )}
       {mode === DELETE && <Status message={"Deleting"} />}
 
       
