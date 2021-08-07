@@ -65,8 +65,6 @@ export default function useApplicationData() {
   }
 
 
-  // updateSpots(state)
-
   //id = appointment id
   //interview = details about student and interviewer
   function bookInterview(id, interview) {
