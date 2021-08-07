@@ -6,21 +6,23 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "components/Appointment/Form";
+import Status from "components/Appointment/Status";
 
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
+const SAVE = "SAVE";
+const DELETE = "DELETE";
 
 export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
-    
   );
 
-  const { bookInterview } = props;
+  const { bookInterview, cancelInterview } = props;
   
 
   //name = student name that user entered
@@ -31,10 +33,22 @@ export default function Appointment(props) {
       interviewer
     };
 
+    transition(SAVE)
+
     bookInterview(props.id, interview)
-    transition(SHOW)
+      .then(() => transition(SHOW))
+      // .catch(() => transition(ERROR))
   }
-  
+
+
+  function deleteAppointment() {
+    console.log('inside delete appointment')
+    transition(DELETE)
+    cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+
+  }
+
 
   return (
     <article className="appointment">
@@ -44,6 +58,7 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={deleteAppointment}
         />
       )}
       {mode === CREATE && (
@@ -53,6 +68,8 @@ export default function Appointment(props) {
           onCancel={() => transition(EMPTY)}
         />
       )}
+      {mode === SAVE && <Status message={"Saving"} />}
+      {mode === DELETE && <Status message={"Deleting"} />}
 
       
     </article>
