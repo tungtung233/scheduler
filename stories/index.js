@@ -156,7 +156,8 @@ storiesOf("Appointment", module)
     .add("Show", () => 
       <Show 
         student="Lydia Miller-Jones"
-        interviewer={interviewer}
+        // make interviewer an object within an object because your getInterview function will return both the student and interviewer details - interviewer details will be within that object
+        interview={{interviewer}}
         onEdit={action("onEdit")} 
         onDelete={action("onDelete")} 
       />

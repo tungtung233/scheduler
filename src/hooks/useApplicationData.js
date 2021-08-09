@@ -40,6 +40,7 @@ export default function useApplicationData() {
     //containts an array of the current day's appointment IDs
     const currentDayAllApps = currentDayObj.appointments;
 
+    //checks to make sure that the appointment value is "null"
     const currentDayFreeApps = currentDayAllApps.filter(appId => !state.appointments[appId].interview)
 
     const freeSpots = currentDayFreeApps.length;
