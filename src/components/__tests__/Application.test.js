@@ -9,7 +9,8 @@ import {
   getByText, 
   getByAltText,
   getByPlaceholderText,
-  prettyDOM, 
+  prettyDOM,
+  getByTestId, 
   getAllByTestId 
 } from "@testing-library/react";
 
@@ -28,7 +29,7 @@ describe("Application", () => {
 
 
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"))
 
     //gets all the appointments for the day (articles), in an array
@@ -67,8 +68,8 @@ describe("Application", () => {
   });
   
   
-  it.only("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
-    const { container, debug } = render(<Application />);
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"))
 
     //gets all the appointments for the day (articles), in an array, then finds the appointment booked by 'Archie Cohen'
@@ -96,8 +97,42 @@ describe("Application", () => {
     
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
 
-    debug();
-
   });
 
+
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    const { container } = render(<Application />);
+    await waitForElement(() => getByText(container, "Archie Cohen"))
+
+    
+    //gets all the appointments for the day (articles), in an array, then finds the appointment booked by 'Archie Cohen'
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    
+    //a booked appointment will show the edit icon, alt-text is 'Edit'
+    fireEvent.click(getByAltText(appointment, "Edit"));
+
+    //enter the value 'Lydia Miller-Jones' as the student name
+    fireEvent.change((getByTestId(appointment, "student-name-input")), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
+    fireEvent.click(getByText(appointment, "Save"));
+
+    //Verifing that after entering a new appointment, we see the 'Saving' component
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+    //checks that 'Lydia Miller-Jones' is now showing - it was the student name we just tried to save
+    await waitForElement(() => queryByText(appointment, "Lydia Miller-Jones"));
+
+
+    //after saving a new appointment under 'Monday', we should have '1 spot remaining'
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+
+  });
 })
