@@ -27,7 +27,7 @@ describe("Application", () => {
   });
 
 
-  it.only("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
+  it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"))
 
@@ -67,5 +67,37 @@ describe("Application", () => {
   });
   
   
+  it.only("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    const { container, debug } = render(<Application />);
+    await waitForElement(() => getByText(container, "Archie Cohen"))
+
+    //gets all the appointments for the day (articles), in an array, then finds the appointment booked by 'Archie Cohen'
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    
+    //a booked appointment will show the delete icon, alt-text is 'Delete'
+    fireEvent.click(getByAltText(appointment, "Delete"));
+
+    expect(getByText(appointment, "Delete the appointment?")).toBeInTheDocument();
+
+    fireEvent.click(getByText(appointment, "Confirm"));
+
+    //Verifing that after entering a new appointment, we see the 'Deleting' component
+    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+
+    //checks that the add button is now showing
+    await waitForElement(() => getByAltText(appointment, "Add"));
+
+    //after deleting the appointment under 'Monday', we should have '2 spots remaining'
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+
+    debug();
+
+  });
 
 })
