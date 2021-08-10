@@ -17,6 +17,8 @@ import Appointment from "components/Appointment";
 
 /*
   A test that renders a React Component
+  -- seems to be a useless test? 
+  "These tests aren't very useful anymore since every other test in the same file renders the component being tested."
 */
 describe("Appointment", () => {
   it("renders without crashing", () => {
