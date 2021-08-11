@@ -1,16 +1,16 @@
 describe("Appointments", () => {
 
-  const beforeEach = function () {
+  beforeEach(() => {
     //since these tests actually change the server state, we must reset every time
     cy.request('GET', "/api/debug/reset")
 
     cy.visit("/");
 
     cy.contains('Monday')
-  }
+  })
 
   it("should book an interview", () => {
-    beforeEach();
+    // beforeEach();
 
     cy.get('[alt=Add]')
       .first() //there are actually two 'Add' buttons on the page, so we have to specify the first - the second one is hidden in the 5pm slot
