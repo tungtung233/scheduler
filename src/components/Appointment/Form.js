@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
-import { action } from '@storybook/addon-actions/dist/preview';
+// import { action } from '@storybook/addon-actions/dist/preview';
 
 /* props received:
 
@@ -39,8 +39,11 @@ export default function Form(props) {
     if (name === "") {
       setError("Student name cannot be blank");
       return;
+    } else if (!interviewer) {
+      setError("Please select an interviewer");
+      return;
     }
-    
+
     setError("");
     props.onSave(name, interviewer);
   }

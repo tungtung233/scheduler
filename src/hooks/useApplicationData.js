@@ -50,12 +50,12 @@ export default function useApplicationData() {
     // ^notice how this is an *array* of objects, hence why we need to find the index of the current day in the days array
     //cannot directly change the state - right now to get the value of 'freeSpots' we are directly referencing the state (but not manipulating it)
 
-    const updatedState = { ... state }
+    const updatedState = {...state}
 
     //makes a copy of the days array from state, rather than referencing it
-    updatedState.days = [ ... state.days]
+    updatedState.days = [...state.days]
     //makes a copy of the current day object from state ('currentDayObj' was a reference to the state, so updating spots in currentDayObj would change the state)
-    const updatedDay = { ... currentDayObj}
+    const updatedDay = {...currentDayObj}
     //updates the number of free spots in the copy of the current day obj
     updatedDay.spots = freeSpots
     //updates the entire current day object in the copied state object

@@ -68,6 +68,9 @@ describe("Form", () => {
       target: { value: "Lydia Miller-Jones" }
     });
   
+    //selecting an interviewer
+    fireEvent.click(getByAltText("Sylvia Palmer"));
+
     fireEvent.click(getByText("Save"));
   
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
