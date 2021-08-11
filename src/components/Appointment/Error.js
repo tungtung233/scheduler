@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
 
 /*props received:
-  * message:String eg. "Could not delete appointment."
-  * onClose:Function to be called when the user clicks the Close button
-*/
+ * message:String eg. "Could not delete appointment."
+ * onClose:Function to be called when the user clicks the Close button
+ */
 
 export default function Error(props) {
+  const errorBack = function () {
+    props.onClose();
+  };
 
-  const errorBack = function() {
-    props.onClose()
-  }
-
-  return(
+  return (
     <main className="appointment__card appointment__card--error">
       <section className="appointment__error-message">
         <h1 className="text--semi-bold">Error</h1>
@@ -24,5 +23,5 @@ export default function Error(props) {
         onClick={errorBack}
       />
     </main>
-  )
+  );
 }

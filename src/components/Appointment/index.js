@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 import "components/Appointment/styles.scss";
 
@@ -12,9 +12,9 @@ import Error from "components/Appointment/Error";
 
 import useVisualMode from "hooks/useVisualMode";
 
-const EMPTY = 'EMPTY';
-const SHOW = 'SHOW';
-const CREATE = 'CREATE';
+const EMPTY = "EMPTY";
+const SHOW = "SHOW";
+const CREATE = "CREATE";
 const SAVE = "SAVE";
 const DELETE = "DELETE";
 const CONFIRM = "CONFIRM";
@@ -23,53 +23,50 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
-
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   const { bookInterview, cancelInterview } = props;
-  
-  
+
   //name = student name that user entered
   //interviewer = id of interviewer selected
   function save(name, interviewer) {
     const interview = {
       student: name,
-      interviewer
+      interviewer,
     };
 
-    transition(SAVE, true)
+    transition(SAVE, true);
 
     bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch(() => transition(ERROR_SAVE, true))
+      .catch(() => transition(ERROR_SAVE, true));
   }
 
   function editAppointment() {
-    transition(EDIT)
+    transition(EDIT);
   }
 
   function deleteAppointment() {
-    transition(CONFIRM)
+    transition(CONFIRM);
   }
 
   function confirmDeleteAppointment() {
-    transition(DELETE, true)
+    transition(DELETE, true);
 
     cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch(() => transition(ERROR_DELETE, true))
+      .catch(() => transition(ERROR_DELETE, true));
   }
 
   function errorBack() {
-    back()
+    back();
   }
-
 
   return (
     <article className="appointment" data-testid="appointment">
-      <Header time={props.time}/>
+      <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
@@ -96,20 +93,20 @@ export default function Appointment(props) {
         />
       )}
       {mode === SAVE && <Status message={"Saving"} />}
-      {mode === ERROR_SAVE && <Error message={"Could not save appointment"} onClose={errorBack} />}
+      {mode === ERROR_SAVE && (
+        <Error message={"Could not save appointment"} onClose={errorBack} />
+      )}
       {mode === CONFIRM && (
-        <Confirm 
-          message={"Delete the appointment?"} 
+        <Confirm
+          message={"Delete the appointment?"}
           onCancel={() => transition(SHOW)}
           onConfirm={confirmDeleteAppointment}
         />
       )}
       {mode === DELETE && <Status message={"Deleting"} />}
-      {mode === ERROR_DELETE && <Error message={"Could not delete appointment"} onClose={errorBack} />}
-      
+      {mode === ERROR_DELETE && (
+        <Error message={"Could not delete appointment"} onClose={errorBack} />
+      )}
     </article>
-
-  )
+  );
 }
-
-

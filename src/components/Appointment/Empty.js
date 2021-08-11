@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
 
-/*props received: 
-  * onAdd: function - to be called when the user clicks the Add button
-*/
-
+/*props received:
+ * onAdd: function - to be called when the user clicks the Add button
+ */
 
 export default function Header(props) {
   return (
@@ -15,5 +14,5 @@ export default function Header(props) {
         onClick={props.onAdd}
       />
     </main>
-  )
+  );
 }
