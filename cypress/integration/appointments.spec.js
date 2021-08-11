@@ -31,10 +31,9 @@ describe("Appointments", () => {
 
 
   it("should edit an interview", () => {
-    
     cy.get('[alt=Edit]')
-    .last() //there will be two edit icons on the page - we want to select the last one
-    .click({ force: true })
+      .last() //there will be two edit icons on the page - we want to select the last one
+      .click({ force: true })
     
     //find the input bar and edit the name
     cy.get("[data-testid=student-name-input]")
@@ -49,6 +48,20 @@ describe("Appointments", () => {
     //verify that the new student name and interviewer show up on the page
     cy.contains(".appointment__card--show", "Veronica Leung");
     cy.contains(".appointment__card--show", "Tori Malcolm");
+  })
+
+  it("should cancel an interview", () => {
+    cy.get('[alt=Delete]')
+      .last() //there will be two delete icons on the page - we want to select the last one
+      .click({ force: true })
+
+    cy.contains('Confirm').click();
+
+    cy.contains("Deleting").should("exist");
+    cy.contains("Deleting").should("not.exist");
+
+    cy.contains(".appointment__card--show", "Veronica Leung")
+    .should("not.exist");
   })
   
 });
