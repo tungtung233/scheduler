@@ -12,6 +12,16 @@ import Error from "components/Appointment/Error";
 
 import useVisualMode from "hooks/useVisualMode";
 
+/*props received:
+ * key: appointment id number
+ * id: appointment id number
+ * time: appointment time (comes from the db)
+ * interview: contains all the details about the interview, including student name, interviewer id, name and avatar
+ * interviewers: contains all interviewers available for that appointment slot
+ * bookInterview: function
+ * cancelInterview: function
+ */
+
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -23,6 +33,7 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
+  //this is how it knows which appointment mode to begin showing
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -37,17 +48,21 @@ export default function Appointment(props) {
       interviewer,
     };
 
+    //'true' - if there is an error with saving, then cancelling will bring the user back to the visual mode of EMPTY, instead of the CREATE form
     transition(SAVE, true);
 
+    //if this promise resolves, state will get updated with the new appointment details and spots available will also update. Else error visual will show
     bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true));
   }
 
+  //pressing the Edit Icon will show the Edit visual mode
   function editAppointment() {
     transition(EDIT);
   }
 
+  //pressing the Delete Icon will show the Delete confirmation visual mode
   function deleteAppointment() {
     transition(CONFIRM);
   }
@@ -55,11 +70,13 @@ export default function Appointment(props) {
   function confirmDeleteAppointment() {
     transition(DELETE, true);
 
+    //if this promise resolves, state will get updated (appointment will be empty) and spots available will also update. Else error visual will show
     cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch(() => transition(ERROR_DELETE, true));
   }
 
+  //if there is an error, pressing the X will run back()
   function errorBack() {
     back();
   }

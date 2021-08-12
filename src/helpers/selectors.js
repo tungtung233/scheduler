@@ -1,10 +1,14 @@
 export function getAppointmentsForDay(state, day) {
+  //gets all the details for that particular selected day only
   const filteredDay = state.days.filter((element) => element.name === day);
 
   if (filteredDay[0]) {
+    //creates an array of appointment IDs
     const appointments = filteredDay[0].appointments;
 
+    //using the appointment ID, creates an array (arrayOfAppointmentInfo) containing the appointment info (including appointment time, student name, interviewer id)
     const arrayOfAppointmentInfo = [];
+
     appointments.forEach((appointment) => {
       arrayOfAppointmentInfo.push(state.appointments[appointment]);
     });
@@ -16,11 +20,14 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterviewersForDay(state, day) {
+  //gets all the details for that particular selected day only
   const filteredDay = state.days.filter((element) => element.name === day);
 
   if (filteredDay[0]) {
+    //based on the available interviewers for this particular day, creates an array of those interviewer's IDs
     const interviewers = filteredDay[0].interviewers;
 
+    //using the interviewers' IDs, creates an array (arrayOfInterviewerInfo) containing the interviewers details (including their id, name and avatar)
     const arrayOfInterviewerInfo = [];
     interviewers.forEach((interviewerId) => {
       arrayOfInterviewerInfo.push(state.interviewers[interviewerId]);

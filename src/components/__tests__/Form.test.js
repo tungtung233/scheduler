@@ -1,5 +1,4 @@
 import React from "react";
-
 import { render, cleanup, fireEvent } from "@testing-library/react";
 
 import Form from "components/Appointment/Form";
@@ -32,21 +31,21 @@ describe("Form", () => {
   });
 
   it("validates that the student name is not blank", () => {
-    /* Create the mock onSave function */
+    // Create the mock onSave function
     const onSave = jest.fn();
 
-    /* Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined */
+    // Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined
     const { getByText } = render(
       <Form interviewers={interviewers} name="" onSave={onSave} />
     );
 
-    /* Click the save button */
+    // Click the save button
     fireEvent.click(getByText("Save"));
 
-    /* validation is shown */
+    // validation is shown
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
 
-    /* onSave is not called */
+    // onSave is not called
     expect(onSave).not.toHaveBeenCalled();
   });
 
@@ -57,20 +56,24 @@ describe("Form", () => {
 
     fireEvent.click(getByText("Save"));
 
+    //make sure that the error message appears first
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
     expect(onSave).not.toHaveBeenCalled();
 
+    //enter a student name
     fireEvent.change(getByPlaceholderText("Enter Student Name"), {
       target: { value: "Lydia Miller-Jones" },
     });
 
-    //selecting an interviewer
+    //select an interviewer
     fireEvent.click(getByAltText("Sylvia Palmer"));
 
     fireEvent.click(getByText("Save"));
 
+    //verify that the error message is not showing
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
 
+    //make sure that onSave has been called
     expect(onSave).toHaveBeenCalledTimes(1);
     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
   });
@@ -94,10 +97,13 @@ describe("Form", () => {
 
     fireEvent.click(getByText("Cancel"));
 
+    //verify that the error message is not showing
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
 
+    //verify that the input field is blank
     expect(getByPlaceholderText("Enter Student Name")).toHaveValue("");
 
+    //make sure that onCancel has been called
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
 });

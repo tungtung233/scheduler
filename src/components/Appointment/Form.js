@@ -6,14 +6,14 @@ import Button from "components/Button";
 /* props received:
 
 *EDIT MODE:*
-  * name:String
-  * interviewers:Array
-  * interviewer:Number
+  * name:String - student name
+  * interviewers:Array - all the interviewers available that appointment slot
+  * interviewer:Number - the particular interviewer selected for this appointment
   * onSave:Function
   * onCancel:Function
 
 *CREATE MODE:*
-  * interviewers:Array
+  * interviewers:Array - all the interviewers available that day
   * onSave:Function
   * onCancel:Function
 */
@@ -23,16 +23,18 @@ export default function Form(props) {
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
+  //reset both the student name and the selected interviewer
   const reset = function () {
     setName("");
     setInterviewer(null);
   };
 
   const cancel = function () {
-    reset();
+    reset(); //resets the form
     props.onCancel();
   };
 
+  //ensures that the user has entered a student name and has selected an interviewer
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
@@ -42,7 +44,7 @@ export default function Form(props) {
       return;
     }
 
-    setError("");
+    setError(""); //clear the error
     props.onSave(name, interviewer);
   }
 
@@ -62,9 +64,6 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             data-testid="student-name-input"
-            /*
-              This must be a controlled component
-            */
           />
           <section className="appointment__validation">{error}</section>
         </form>

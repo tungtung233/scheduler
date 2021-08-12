@@ -3,15 +3,17 @@ import Button from "components/Button";
 
 /* props received:
  * message:String eg. "Delete the appointment?"
- * onConfirm:Function - to be called when the user clicks the Confirm button
- * onCancel:Function - to be called when the user clicks the Cancel button
+ * onCancel:Function
+ * onConfirm:Function
  */
 
 export default function Confirm(props) {
+  //when the 'Cancel' button has been clicked- call props.onCancel
   const cancelDelete = function () {
     props.onCancel();
   };
 
+  //when the 'Confirm' button has been clicked- call props.onConfirm
   const confirmDelete = function () {
     props.onConfirm();
   };

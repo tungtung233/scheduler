@@ -10,14 +10,19 @@ import {
 } from "../helpers/selectors";
 import useApplicationData from "../hooks/useApplicationData";
 
-export default function Application(props) {
+export default function Application() {
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
 
+  //returns an array containing all the appointments for the selected day
   let dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  //returns an array containing all the interviewers available for the selected day
   let dailyInterviewers = getInterviewersForDay(state, state.day);
 
+  //goes through all the appointments for the day and creates an Appointment component for each appointment, based on that appointment's data
   const appointmentList = dailyAppointments.map((appointment) => {
+    //returns an object containing the student's name and a nested object containing the interviewer's details
     const interview = getInterview(state, appointment.interview);
     return (
       <Appointment

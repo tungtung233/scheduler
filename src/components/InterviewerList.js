@@ -13,13 +13,14 @@ import "components/InterviewerList.scss";
 function InterviewerList(props) {
   const { interviewers } = props;
 
+  //goes through all the interviewers available for that day and creates an InterviewerListItem based on their data
   const parsedInterviewerList = interviewers.map((interviewer) => (
     <InterviewerListItem
       key={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
       selected={interviewer.id === props.interviewer}
-      setInterviewer={(event) => props.setInterviewer(interviewer.id)}
+      setInterviewer={() => props.setInterviewer(interviewer.id)}
     />
   ));
 
@@ -31,6 +32,7 @@ function InterviewerList(props) {
   );
 }
 
+//ensures that the 'interviewers' prop that InterviewerList receives is an array
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired,
 };

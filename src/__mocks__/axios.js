@@ -53,6 +53,7 @@ const fixtures = {
   },
 };
 
+//simulates fake axios requests for testing purposes
 export default {
   get: jest.fn((url) => {
     if (url === "/api/days") {

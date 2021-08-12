@@ -2,16 +2,18 @@ import React from "react";
 
 /*props received:
  * student:String eg. "Lydia Miller-Jones"
- * interviewer:Object we can use the interview object that already exists in stories/index.js for this
- * onEdit:Function to be called when the user clicks the Edit button
- * onDelete:Function to be called when the user clicks the Delete button
+ * interview:Object - contains all details about this particular appointment - including interviewer name, id and avatar
+ * onEdit:Function
+ * onDelete:Function
  */
 
 export default function Show(props) {
+  //when clicking the Edit Icon - calls props.onEdit
   const editApp = function () {
     props.onEdit();
   };
 
+  //when clicking the Delete Icon - calls props.onDelete
   const deleteApp = function () {
     props.onDelete();
   };

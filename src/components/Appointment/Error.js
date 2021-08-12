@@ -2,10 +2,11 @@ import React from "react";
 
 /*props received:
  * message:String eg. "Could not delete appointment."
- * onClose:Function to be called when the user clicks the Close button
+ * onClose:Function
  */
 
 export default function Error(props) {
+  //when the X icon has been clicked- call props.onClose
   const errorBack = function () {
     props.onClose();
   };

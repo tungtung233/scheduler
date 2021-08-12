@@ -23,6 +23,8 @@ describe("Application", () => {
     const { getByText } = render(<Application />);
     await waitForElement(() => getByText("Monday"));
     fireEvent.click(getByText("Tuesday"));
+
+    //Leopold Silvers has an interview appointment on Tuesday
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 

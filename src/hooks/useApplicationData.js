@@ -3,14 +3,13 @@ import axios from "axios";
 
 export default function useApplicationData() {
   const [state, setState] = useState({
-    day: "Monday",
+    day: "Monday", //default selected day is Monday
     days: [],
     appointments: {},
     interviewers: {},
   });
 
   const setDay = (day) => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
     Promise.all([
@@ -18,6 +17,7 @@ export default function useApplicationData() {
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
+      //updates the state with all the information recieved from the axios get requests
       setState((prev) => ({
         ...prev,
         days: all[0].data,
@@ -25,7 +25,7 @@ export default function useApplicationData() {
         interviewers: all[2].data,
       }));
     });
-  }, []);
+  }, []); //empty square brackets ensures that this useEffect is only ran once during page load
 
   function updateSpots(state) {
     const currentDay = state.day;
@@ -73,42 +73,51 @@ export default function useApplicationData() {
     return axios
       .put(`/api/appointments/${id}`, { interview: { ...interview } })
       .then(() => {
+        //makes a copy of the current appointment and updates it with the new information
         const appointment = {
           ...state.appointments[id],
           interview: { ...interview },
         };
 
+        //copies all the appointments in state, whilst only updating the appointment with the same id
         const appointments = {
           ...state.appointments,
           [id]: appointment,
         };
 
+        //updates the state with all the appointments and the updated appointment
         setState({
           ...state,
           appointments,
         });
 
+        //updates the state to reflect the correct number of spots available
         setState((prev) => updateSpots(prev));
       });
   }
 
+  //id = appointment id
   function cancelInterview(id) {
     return axios.delete(`/api/appointments/${id}`).then(() => {
+      //makes a copy of the current appointment and updates it with the new information
       const appointment = {
         ...state.appointments[id],
-        interview: null,
+        interview: null, //empty appointments have the value of null
       };
 
+      //copies all the appointments in state, whilst only updating the appointment with the same id
       const appointments = {
         ...state.appointments,
         [id]: appointment,
       };
 
+      //updates the state with all the appointments and the updated appointment
       setState({
         ...state,
         appointments,
       });
 
+      //updates the state to reflect the correct number of spots available
       setState((prev) => updateSpots(prev));
     });
   }
