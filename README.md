@@ -7,6 +7,16 @@ Students are able to book an appointment with a mentor by clicking on an empty t
 This app was deployed online through Heroku, CircleCI and Netlify. It can be found here - https://scheduler-ytl.netlify.app/
 (Please give the app a few moments to start up the API and load the data)
 
+## Final Product
+
+(https://raw.githubusercontent.com/tungtung233/scheduler/master/docs/Scheduler.gif)
+
+_Creating, editing and deleting an appointment_
+!["Creating, editing and deleting an appointment"](https://raw.githubusercontent.com/tungtung233/scheduler/master/docs/Scheduler%20-%20Create%2C%20Edit%2C%20Delete%20an%20Appointment.gif)
+
+_Saving and deleting an appointment - error messages_
+!["Saving and deleting an appointment - error messages"](https://raw.githubusercontent.com/tungtung233/scheduler/master/docs/Scheduler%20-%20Saving%2C%20Deleting%20Errors.gif)
+
 ## Dependencies
 
 - axios
