@@ -9,7 +9,7 @@ This app was deployed online through Heroku, CircleCI and Netlify. It can be fou
 
 ## Final Product
 
-!["Main webapp"](https://raw.githubusercontent.com/tungtung233/scheduler/master/docs/Scheduler.gif)
+!["Main webapp"](https://raw.githubusercontent.com/tungtung233/scheduler/master/docs/Scheduler%20-%20Main%20Webapp.gif)
 
 _Creating, editing and deleting an appointment_
 !["Creating, editing and deleting an appointment"](https://raw.githubusercontent.com/tungtung233/scheduler/master/docs/Scheduler%20-%20Create%2C%20Edit%2C%20Delete%20an%20Appointment.gif)
